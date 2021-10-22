@@ -1,17 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import TickersPage from "./pages/TickersPage";
+import './App.css'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+const routes = (
+    <BrowserRouter>
+        <div className='container mx-auto'>
+            <Switch>
+                <Route path="/home" component={HomePage}/>
+                <Route path="/tickers" component={TickersPage}/>
+                <Redirect from="/" to="/home"/>
+            </Switch>
+        </div>
+    </BrowserRouter>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+ReactDOM.render(routes, document.getElementById("root"));
