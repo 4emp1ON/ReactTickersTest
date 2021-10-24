@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import {INotificationStatus, NotificationStore} from "./NotificationStore";
+import {INotificationStatus, notificationStore} from "../stores/NotificationStore";
 import {makeObservable, observable} from "mobx"
 import {observer} from "mobx-react";
 
 @observer
-class NotificationProvider extends Component<{}> {
+class NotificationList extends Component<{}> {
+    //TODO: make NotificationItem
 
-    @observable store = NotificationStore;
+    @observable store = notificationStore;
 
     constructor(props: {}) {
         super(props);
@@ -39,4 +40,4 @@ class NotificationProvider extends Component<{}> {
     }
 }
 
-export default NotificationProvider;
+export default NotificationList;

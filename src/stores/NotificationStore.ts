@@ -1,5 +1,4 @@
-import {action, computed, makeObservable, observable} from "mobx";
-// @ts-ignore
+import {action, makeObservable, observable} from "mobx";
 import {v4} from 'uuid';
 
 
@@ -18,21 +17,13 @@ export interface INotificationItem extends INotificationDto {
     status: INotificationStatus,
 }
 
-export class _NotificationStore {
+class _NotificationStore {
 
     @observable
     notificationList: INotificationItem[] = []
 
     constructor() {
         makeObservable(this)
-    }
-
-    @computed
-    get nextNotification() {
-        if (!this.notificationList.length) {
-            return false
-        }
-        return this.notificationList[0]
     }
 
     @action
@@ -45,7 +36,7 @@ export class _NotificationStore {
                 message: notification.message,
             }
         this.notificationList.push(notificationItem)
-        this.hideWTimeout(notificationItem)
+        this.hideWithDelay(notificationItem)
     }
 
     @action
@@ -58,18 +49,18 @@ export class _NotificationStore {
                 message: notification.message,
             }
         this.notificationList.push(notificationItem)
-        this.hideWTimeout(notificationItem)
+        this.hideWithDelay(notificationItem)
     }
 
     @action
-    private hideWTimeout(notification: INotificationItem) {
+    private hideWithDelay(notification: INotificationItem) {
         setTimeout(() => {
-            this.drop(notification)
+            this.remove(notification)
         }, 5000)
     }
 
     @action
-    drop(notification: INotificationItem) {
+    remove(notification: INotificationItem) {
         const idx = this.notificationList.findIndex((notify) => notify.id === notification.id);
         if (idx >= 0) {
             this.notificationList.splice(idx, 1);
@@ -77,5 +68,5 @@ export class _NotificationStore {
     }
 }
 
-export const NotificationStore = new _NotificationStore()
+export const notificationStore = new _NotificationStore()
 

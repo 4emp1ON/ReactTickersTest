@@ -4,11 +4,11 @@ import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import TickersPage from "./pages/TickersPage";
 import './App.css'
-import NotificationProvider from "./components/NotificationProvider/NotificationProvider";
+import NotificationList from "./components/NotificationList";
 
 const routes = (
     <BrowserRouter>
-        <NotificationProvider>
+        <NotificationList>
             <div className='container mx-auto'>
                 <Switch>
                     <Route path="/home" component={HomePage}/>
@@ -16,7 +16,7 @@ const routes = (
                     <Redirect from="/" to="/home"/>
                 </Switch>
             </div>
-        </NotificationProvider>
+        </NotificationList>
     </BrowserRouter>
 );
 
