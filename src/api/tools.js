@@ -13,7 +13,7 @@ export function getInstance() {
                 return response.data;
             },
             error => {
-                return Promise.reject(error.response);
+                return Promise.reject(error);
             }
         );
     }

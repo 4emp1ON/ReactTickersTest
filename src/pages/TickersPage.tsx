@@ -38,15 +38,21 @@ class TickersPage extends Component<ITickersPageProps> {
     }
 
     onLinkClick = () => {
-            this.setActiveLink()
+        this.setActiveLink()
     }
 
     @action
     setActiveLink = () => {
         process.nextTick(() => {
             const pathName = this.props.location.pathname.split('/')
-            this.activeLocation = pathName[pathName.length - 1] === ITickersList.TICKERS_A ? ITickersList.TICKERS_A : ITickersList.TICKERS_B;
+            const currentLocation = pathName[pathName.length - 1] === ITickersList.TICKERS_A ? ITickersList.TICKERS_A : ITickersList.TICKERS_B;
+            this.setActiveLocation(currentLocation)
         })
+    }
+
+    @action
+    setActiveLocation(location: ITickersList) {
+        this.activeLocation = location
     }
 
     isComponentActive(tickerName: ITickersList) {

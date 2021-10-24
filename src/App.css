@@ -12,3 +12,7 @@ tr:nth-of-type(even) {
 tr:nth-of-type(odd) {
     @apply bg-gray-200
 }
+
+.hello{
+    transform: translateX(-100%);
+}
