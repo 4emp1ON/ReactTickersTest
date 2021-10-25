@@ -7,6 +7,7 @@ import {observer} from "mobx-react";
 interface ITickerListProps {
     tickerList?: ITickerItem[]
     isLoading: boolean
+    showTickerModal: any
 }
 
 @observer
@@ -29,11 +30,11 @@ class TickerList extends Component<ITickerListProps> {
                     </tr>
                     </thead>
                     <tbody>
-                        {this.props.tickerList && this.props.tickerList.map(ticker => {
-                            return (
-                                <TickerItem key={ticker.id} {...ticker} />
-                            )
-                        })}
+                    {this.props.tickerList && this.props.tickerList.map(ticker => {
+                        return (
+                            <TickerItem handleClick={this.props.showTickerModal} key={ticker.id} ticker={ticker} />
+                        )
+                    })}
                     </tbody>
                 </table>
 

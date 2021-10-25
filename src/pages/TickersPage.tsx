@@ -3,8 +3,9 @@ import {Link, Redirect, Route, RouteComponentProps, Switch} from "react-router-d
 import {action, makeObservable, observable, reaction} from "mobx";
 import {observer} from "mobx-react";
 import TickerList from "../components/TickerList";
-import {ITickersTab} from "../types/Tickers";
+import {ITickerItem, ITickersTab} from "../types/Tickers";
 import {tickersStore} from "../stores/TickersStore";
+import TickerModal from "../components/TickerModal";
 
 
 interface ITickersPageProps extends RouteComponentProps {
@@ -14,7 +15,9 @@ interface ITickersPageProps extends RouteComponentProps {
 class TickersPage extends Component<ITickersPageProps> {
     path = '';
     @observable activeTab?: ITickersTab = ITickersTab.TAB_A
-    @observable private _interval?: any
+    @observable private _interval?: any = undefined
+    @observable modalShow = false
+    @observable tickerModalContent?: null | ITickerItem = null
 
     constructor(props: ITickersPageProps) {
         super(props);
@@ -73,6 +76,22 @@ class TickersPage extends Component<ITickersPageProps> {
         return this.isComponentActive(tickerName) ? 'bg-yellow-500' : ''
     }
 
+    @action
+    showTickerModal = (ticker: ITickerItem) => {
+        this.stopFetching()
+        document.body.classList.add('no-scroll')
+        this.modalShow = true
+        this.tickerModalContent = ticker
+    }
+
+    @action
+    hideTickerModal = () => {
+        this.modalShow = false;
+        document.body.classList.remove('no-scroll')
+        this.tickerModalContent = null
+        this.startFetching();
+    }
+
     render() {
         return (
             <div className="py-3">
@@ -97,18 +116,22 @@ class TickersPage extends Component<ITickersPageProps> {
                     <div className="p-4">
                         <Switch>
                             <Route path={`${this.path}/${ITickersTab.TAB_A}`}>
-                                <TickerList tickerList={tickersStore.tickersList} isLoading={tickersStore.isLoading}/>
+                                <TickerList tickerList={tickersStore.tickersList}
+                                            isLoading={tickersStore.isLoading}
+                                            showTickerModal={this.showTickerModal}/>
                             </Route>
                             <Route path={`${this.path}/${ITickersTab.TAB_B}`}>
-                                <TickerList tickerList={tickersStore.tickersList} isLoading={tickersStore.isLoading}/>
+                                <TickerList tickerList={tickersStore.tickersList}
+                                            isLoading={tickersStore.isLoading}
+                                            showTickerModal={this.showTickerModal}/>
                             </Route>
                             <Redirect from={this.path} to={`${this.path}/${ITickersTab.TAB_A}`}/>
                         </Switch>
                     </div>
                 </div>
+                {this.modalShow ? <TickerModal ticker={this.tickerModalContent} hideModal={this.hideTickerModal} /> :''}
             </div>
-        )
-            ;
+        );
     }
 }
 
