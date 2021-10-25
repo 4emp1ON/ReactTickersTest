@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {ITickerItem} from "../types/Tickers";
 import {observer} from "mobx-react";
 
+
 @observer
 class TickerItem extends Component<ITickerItem> {
     render() {

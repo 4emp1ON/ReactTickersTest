@@ -4,7 +4,7 @@ import {api} from "../api/Api";
 import {notificationStore} from "./NotificationStore";
 
 class _TickersStore {
-    @observable tickersList?: ITickerItem[]
+    @observable tickersList?: ITickerItem[] = []
     @observable isLoading = true
 
     constructor() {
@@ -12,18 +12,16 @@ class _TickersStore {
     }
 
     private _apiMap = {
-        [ITickersTab.TAB_A]: api.getTickerA(),
-        [ITickersTab.TAB_B]: api.getTickerB()
+        [ITickersTab.TAB_A]: api.getTickerA,
+        [ITickersTab.TAB_B]: api.getTickerB
     }
 
     @action
     fetchTickers = async (tickerTab: ITickersTab) => {
-        console.log('tickerTab', tickerTab)
         try {
             this.setLoading(true)
-            const list = await this._apiMap[tickerTab]
-            this.setTickersList(list);
-            console.log('list', list);
+            const res = await this._apiMap[tickerTab]()
+            this.setTickersList(res);
             notificationStore.addSuccess({title: 'Успешно обновлено'})
         } catch (e) {
             notificationStore.addError({title: 'Ошибка загрузки'})

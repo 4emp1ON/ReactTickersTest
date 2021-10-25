@@ -2,17 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-th,td {
+th, td {
     @apply p-3
 }
 
 tr:nth-of-type(even) {
     @apply bg-gray-300
 }
+
 tr:nth-of-type(odd) {
     @apply bg-gray-200
 }
 
-.hello{
-    transform: translateX(-100%);
+.fade-enter {
+    opacity: 0;
+}
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 5000ms ease-in;
+}
+.fade-exit {
+    opacity: 1;
+}
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 5000ms ease-in;
 }

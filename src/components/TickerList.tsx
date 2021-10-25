@@ -4,7 +4,6 @@ import Loader from "./Loader";
 import TickerItem from "./TickerItem";
 import {observer} from "mobx-react";
 
-
 interface ITickerListProps {
     tickerList?: ITickerItem[]
     isLoading: boolean
@@ -19,6 +18,7 @@ class TickerList extends Component<ITickerListProps> {
                 {this.props.isLoading ? (
                     <Loader/>
                 ) : ''}
+
                 <table className="w-full text-left rounded-2xl overflow-hidden">
                     <thead>
                     <tr>
@@ -29,13 +29,14 @@ class TickerList extends Component<ITickerListProps> {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.tickerList && this.props.tickerList.map(ticker => {
-                        return (
-                            <TickerItem key={ticker.id} {...ticker} />
-                        )
-                    })}
+                        {this.props.tickerList && this.props.tickerList.map(ticker => {
+                            return (
+                                <TickerItem key={ticker.id} {...ticker} />
+                            )
+                        })}
                     </tbody>
                 </table>
+
             </div>
         );
     }
