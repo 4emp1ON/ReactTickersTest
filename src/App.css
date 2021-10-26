@@ -23,12 +23,12 @@ tr:nth-of-type(odd) {
 }
 .fade-enter-active {
     opacity: 1;
-    transition: opacity 5000ms ease-in;
+    transition: opacity 500ms ease-in;
 }
 .fade-exit {
     opacity: 1;
 }
 .fade-exit-active {
     opacity: 0;
-    transition: opacity 5000ms ease-in;
+    transition: opacity 500ms ease-in;
 }
